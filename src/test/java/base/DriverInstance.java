@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Synchronized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,8 +30,13 @@ public class DriverInstance {
                 if(threadlocal.get()==null){
                     RemoteWebDriver driver;
                     if ("chrome".equals(CommonUtils.getPropertyValue("browser"))) {
+                        ChromeOptions chromeOptions = new ChromeOptions();
+                        chromeOptions.addArguments("disable-extensions");
                         WebDriverManager.chromedriver().setup();
-                        driver = new ChromeDriver();
+                        if(CommonUtils.getPropertyValue("headless").equals("true")) {
+                            chromeOptions.addArguments("headless=new");
+                        }
+                        driver = new ChromeDriver(chromeOptions);
 
                     }else if("firefox".equals(CommonUtils.getPropertyValue("browser"))) {
                         WebDriverManager.firefoxdriver().setup();
