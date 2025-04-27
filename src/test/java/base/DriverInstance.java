@@ -9,13 +9,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.CommonUtils;
-
+import utils.TestUtils;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 
 public class DriverInstance {
     public static final ThreadLocal<RemoteWebDriver> threadlocal=new ThreadLocal<>();
     private static final Lock lock=new ReentrantLock();
+    private static WebDriverWait webDriverWait;
 
 
 
@@ -37,6 +39,7 @@ public class DriverInstance {
                             chromeOptions.addArguments("headless=new");
                         }
                         driver = new ChromeDriver(chromeOptions);
+                         webDriverWait=new WebDriverWait(driver,10);
 
                     }else if("firefox".equals(CommonUtils.getPropertyValue("browser"))) {
                         WebDriverManager.firefoxdriver().setup();
@@ -45,6 +48,7 @@ public class DriverInstance {
                         throw new IllegalArgumentException("invalid browser name");
                     }
                     threadlocal.set(driver);
+                    TestUtils.setWebDriverWait(webDriverWait);
 
                     }
                 }

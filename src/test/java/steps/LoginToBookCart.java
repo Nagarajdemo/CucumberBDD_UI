@@ -8,6 +8,7 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import page.BookcartLandingPage;
 import page.LoginPage;
 import utils.TestUtils;
@@ -28,12 +29,15 @@ public class LoginToBookCart {
     @Given("load to book cart main page")
     public void loadToBookCartMainPage() {
         bookcartLandingPage.clickLoginButton();
+//        TestUtils.waitUntilvisibility(By.xpath("//div[@class='mat-mdc-card-header-text']/child::mat-card-title"));
         TestUtils.waitForAWhile();
     }
 
     @When("user click on login button, login page should be displayed")
     public void userClickOnLoginButtonLoginPageShouldBeDisplayed() {
         Assert.assertEquals("Login",bookcartLandingPage.returnLoginText());
+//        TestUtils.waitUntilvisibility(By.xpath("//div[@class='mat-mdc-form-field-infix ng-tns-c508571215-1']/child::input"));
+
         TestUtils.waitForAWhile();
     }
 
